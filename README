@@ -1,0 +1,9 @@
+Usuarios UDES
+===============
+
+Importar el archivo SQL en data/sql/schema.sql a la base de datos creada en MySQL
+Modificar en el archivo de config/database.yml las contraseñas en la base de datos
+
+Las búsquedas, inserción de usuarios, listado de usuarios se realiza.
+
+No se alcanzó a estilizar la aplicacón.

@@ -1,0 +1,20 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/13-View
+
+default:
+  http_metas:
+    content-type: text/html
+
+  metas:
+    title:        Test Práctico UDES - Cúcuta
+    description:  Test práctico para ingresar como desarrollador web en la UDES - Cúcuta
+    #keywords:     symfony, project
+    language:     es
+    #robots:       index, follow
+
+  stylesheets:    [jquery-ui.css, fluid_grid.css, main.css]
+
+  javascripts:    [jquery.js, jquery-ui.js, jquery.selectAutocomplete.js, main.js]
+
+  has_layout:     true
+  layout:         layout

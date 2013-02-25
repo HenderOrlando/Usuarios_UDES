@@ -1,0 +1,31 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/10-Routing
+
+# default rules
+homepage:
+  url:   /
+  param: { module: user, action: template }
+
+guardarUsuario:
+  url:   /Guardar-Usuario
+  param: { module: user, action: save }
+  
+borrarUsuario:
+  url:   /Borrar-Usuario/:nombre
+  param: { module: user, action: delete, id:-1 }
+  
+buscarUsuario:
+  url:   /Buscar-Usuario/:nombre
+  param: { module: user, action: search, id:-1, nombre:-1 }
+
+listarUsuarios:
+  url:   /Usuarios
+  param: { module: user, action: index }
+# generic rules
+# please, remove them by adding more specific rules
+default_index:
+  url:   /:module
+  param: { action: index }
+
+default:
+  url:   /:module/:action/*
