@@ -99,12 +99,12 @@ class userActions extends sfActions
 
   public function executeDelete(sfWebRequest $request)
   {
-    $request->checkCSRFProtection();
+//    $request->checkCSRFProtection();
 
     $this->forward404Unless($user = Doctrine_Core::getTable('Usuario')->find(array($request->getParameter('id'))), sprintf('Object user does not exist (%s).', $request->getParameter('id')));
     $user->delete();
 
-    $this->redirect('user/index');
+    $this->redirect('@homepage');
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)
