@@ -4,7 +4,7 @@
  */
 
 function submitAjax(id){
-    $(id).submit(function(){
+    $(id).live('submit',function(){
        var el = $(this);
         $.ajax({
             type: $(this).attr('method'),
@@ -12,19 +12,34 @@ function submitAjax(id){
             data: $(this).serialize(),
             success: function(data) {
                 $(el).parent().html(data);
+                checkStyles()
             }
         });
         return false;
     })
 }
 function searchAjax(id){
-    $(id).submit(function(){
+    $(id).live('submit',function(){
         $.ajax({
             type: $(this).attr('method'),
             url: $(this).attr('action'),
             data: $(this).serialize(),
             success: function(data) {
                 $('#list').html(data);
+                checkStyles()
+            }
+        });
+        return false;
+    })
+}
+function linkAjax(id){
+    $(id).live('click',function(){
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('href'),
+            success: function(data) {
+                $('#list').html(data);
+                checkStyles()
             }
         });
         return false;
@@ -46,8 +61,27 @@ function checkFechas(id){
   });
   $('.ui-datepicker-trigger').button().addClass('fixed_border ui-state-default')
 }
+function checkStyles(){
+  $('.botonset').buttonset()
+  $('.botonDisabled').button({disabled: true})
+  $('.boton, button, :submit').button()
+  $('input').live({
+      mouseover: function(){
+          $(this).addClass('ui-state-hover');
+      },
+      mouseout: function(){
+          $(this).removeClass('ui-state-hover');
+      },
+      focus: function(){
+          $('input').removeClass('ui-state-active');
+          $(this).addClass('ui-state-active');
+      }
+  })
+}
 $(function(){
     checkFechas('.fecha')
-    submitAjax('#register_user form');
+    submitAjax('#register_user form, #list_user form');
+    linkAjax('a')
     searchAjax('#search form');
+    checkStyles()
 })

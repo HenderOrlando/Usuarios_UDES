@@ -13,7 +13,7 @@ class UsuarioFormFilter extends BaseUsuarioFormFilter
   public function configure()
   {
       $this->setWidgets(array(
-        'search'     => new sfWidgetFormFilterInput(array('with_empty' => false)),
+        'search'     => new sfWidgetFormFilterInput(array('with_empty' => false),array('class' => 'ui-state-default ui-corner-all', 'placeholder' => 'Search')),
       ));
 
       $this->setValidators(array(

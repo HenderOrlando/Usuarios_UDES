@@ -16,8 +16,10 @@ class userActions extends sfActions
     $this->form_search = new UsuarioFormFilter();
     $q = Doctrine_Core::getTable('Usuario')
       ->createQuery('a');
-    $this->paginador = $this->getUser()->getPaginador('Usuario', $q, $request->getParameter('pagina', 1), 5);
-    
+    $this->paginador = $this->getUser()->getPaginador('Usuario', $q, $request->getParameter('pagina', $request->getAttribute('pagina',1)), 5);
+    $this->getUser()->setAttribute('pagina', $request->getParameter('pagina', $request->getAttribute('pagina',1)));
+    if($request->isXmlHttpRequest())
+        return $this->renderPartial ('list', array('paginador' => $this->paginador));
   }
   public function executeIndex(sfWebRequest $request)
   {
@@ -32,10 +34,12 @@ class userActions extends sfActions
 
     $this->form = new UsuarioForm();
     $datos = array(
-            'action' => 'guardar',
-            'form' => new UsuarioForm(),
-            'mensaje' => 'problemas Guardando el usuario'
-        );
+        'form' => new UsuarioForm(),
+        'action' => 'guardar',
+        'grid' => 'grid_20',
+        'submit' => 'Save',
+        'mensaje' => 'problemas Guardando el usuario'
+    );
     if($this->processForm($request, $this->form)){
         $datos['mensaje'] = 'Usuario Guardado';
     }
@@ -49,9 +53,10 @@ class userActions extends sfActions
     $busca = $request->getParameter($form->getName());
     $q = UsuarioTable::getInstance()->createQuery();
     if($busca['search']['text'] != '')
-        $q->orWhere('name =?', $busca['search']['text'])
-            ->orWhere('code =?', $busca['search']['text']);
+        $q->orWhere('name LIKE ?', '%'.$busca['search']['text'].'%')
+            ->orWhere('code LIKE?', '%'.$busca['search']['text'].'%');
     $paginador = $this->getUser()->getPaginador('Usuario', $q, $request->getParameter('pagina', 1), 5);
+    $this->getUser()->setAttribute('pagina', $request->getParameter('pagina', 1));
     return $this->renderPartial('list', array('paginador' => $paginador));
   }
 
@@ -75,6 +80,10 @@ class userActions extends sfActions
   {
     $this->forward404Unless($user = Doctrine_Core::getTable('Usuario')->find(array($request->getParameter('id'))), sprintf('Object user does not exist (%s).', $request->getParameter('id')));
     $this->form = new UsuarioForm($user);
+    $this->ref = $request->getReferer().'?pagina='.$this->getUser()->getAttribute('pagina', 1);
+    if($request->isMethod('put') && $this->processForm($request, $this->form)){
+        return $this->redirect($this->ref);
+    }
   }
 
   public function executeUpdate(sfWebRequest $request)
@@ -107,6 +116,9 @@ class userActions extends sfActions
       
       if(!$request->isXmlHttpRequest())
         $this->redirect('user/edit?id='.$user->getId());
+      else
+          return true;
     }
+    return false;
   }
 }

@@ -4,19 +4,23 @@
 # default rules
 homepage:
   url:   /
-  param: { module: user, action: template }
+  param: { module: user, action: template}
 
 guardarUsuario:
   url:   /Guardar-Usuario
-  param: { module: user, action: save }
+  param: { module: user, action: save}
   
 borrarUsuario:
-  url:   /Borrar-Usuario/:nombre
-  param: { module: user, action: delete, id:-1 }
+  url:   /Borrar-Usuario/:id/:nombre
+  param: { module: user, action: delete }
+  
+editarUsuario:
+  url:   /Editar-Usuario/:id/:nombre
+  param: { module: user, action: edit}
   
 buscarUsuario:
-  url:   /Buscar-Usuario/:nombre
-  param: { module: user, action: search, id:-1, nombre:-1 }
+  url:   /Buscar-Usuario
+  param: { module: user, action: search }
 
 listarUsuarios:
   url:   /Usuarios

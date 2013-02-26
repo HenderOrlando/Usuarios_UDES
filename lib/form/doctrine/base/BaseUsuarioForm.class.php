@@ -27,7 +27,7 @@ abstract class BaseUsuarioForm extends BaseFormDoctrine
       'id'       => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
       'code'     => new sfValidatorInteger(),
       'name'     => new sfValidatorString(array('max_length' => 30)),
-      'password' => new sfValidatorString(array('max_length' => 25)),
+      'password' => new sfValidatorString(array('max_length' => 40)),
       'email'    => new sfValidatorString(array('max_length' => 40)),
       'date'     => new sfValidatorDateTime(),
     ));

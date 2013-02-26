@@ -23,7 +23,7 @@ Usuario:
       notnull: true
       autoincrement: false
     password:
-      type: string(25)
+      type: string(40)
       fixed: false
       unsigned: false
       primary: false
